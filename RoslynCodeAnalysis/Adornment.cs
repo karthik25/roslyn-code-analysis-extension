@@ -42,7 +42,6 @@ namespace RoslynCodeAnalysis
         private static void SetValue(TextBlock block, string text = "---")
         {
             block.Text = text;
-            block.Visibility = text.StartsWith("0") ? Visibility.Hidden : Visibility.Visible;
         }
 
         private static TextBlock CreateBlocks(Color color)

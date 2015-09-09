@@ -33,17 +33,17 @@ namespace RoslynCodeAnalysis
             var dte = serviceProvider.GetService(typeof(DTE)) as DTE2;
 
             ITextDocument document;
-            if (TextDocumentFactoryService.TryGetTextDocument(textView.TextDataModel.DocumentBuffer, out document))
-            {
-                var highlighter = new RoslynCodeAnalysisHelper(textView, document, tasks, dte, serviceProvider);
+            if (!TextDocumentFactoryService.TryGetTextDocument(textView.TextDataModel.DocumentBuffer, out document))
+                return;
+            
+            var highlighter = new RoslynCodeAnalysisHelper(textView, document, tasks, dte, serviceProvider);
 
-                // On file save (B)
-                document.FileActionOccurred += (s, e) =>
+            // On file save (B)
+            document.FileActionOccurred += (s, e) =>
                 {
                     if (e.FileActionType == FileActionTypes.ContentSavedToDisk)
                         highlighter.Update(true);
                 };
-            }
         }
     }
 }
