@@ -33,6 +33,7 @@ namespace RoslynCodeAnalysis
         public void SetValues(int errors, string classText, string methodText, string propText, string fieldText)
         {
             if (errors != 0) return;
+            SetValue(_classes, classText);
             SetValue(_methods, methodText);
             SetValue(_properties, propText);
             SetValue(_fields, fieldText);
