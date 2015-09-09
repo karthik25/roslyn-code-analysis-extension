@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.Composition;
+using System.IO;
 using EnvDTE;
 using EnvDTE80;
 using Microsoft.VisualStudio.Shell;
@@ -34,6 +35,9 @@ namespace RoslynCodeAnalysis
 
             ITextDocument document;
             if (!TextDocumentFactoryService.TryGetTextDocument(textView.TextDataModel.DocumentBuffer, out document))
+                return;
+
+            if (Path.GetExtension(document.FilePath) != ".cs")
                 return;
             
             var highlighter = new RoslynCodeAnalysisHelper(textView, document, tasks, dte, serviceProvider);

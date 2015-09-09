@@ -39,7 +39,7 @@ namespace RoslynCodeAnalysis
             SetValue(_fields, fieldText);
         }
 
-        private static void SetValue(TextBlock block, string text = "---")
+        private static void SetValue(TextBlock block, string text)
         {
             block.Text = text;
         }
