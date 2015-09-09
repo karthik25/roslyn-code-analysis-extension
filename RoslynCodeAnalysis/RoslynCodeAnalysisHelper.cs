@@ -97,10 +97,11 @@ namespace RoslynCodeAnalysis
             }
 
             var analysisData = _document.FilePath.AnalyizeFile();
+            var classText = string.Format("{0} classes", analysisData.Count);
             var methodText = string.Format("{0} methods", analysisData.SelectMany(a => a.MethodInfos).Count());
             var propText = string.Format("{0} properties", analysisData.SelectMany(a => a.PropertyInfos).Count());
             var fieldText = string.Format("{0} fields", analysisData.SelectMany(a => a.FieldInfos).Count());
-            _text.SetValues(errors, methodText, propText, fieldText);
+            _text.SetValues(errors, classText, methodText, propText, fieldText);
 
             if (highlight)
                 await _text.Highlight();
@@ -113,7 +114,7 @@ namespace RoslynCodeAnalysis
 
             var oneItem = new IVsTaskItem[1];
             var items = new List<IVsTaskItem>();
-            var result = 0; //S_OK == 0, S_FALSE == 1
+            var result = 0;
             do
             {
                 result = itemsEnum.Next(1, oneItem, null);

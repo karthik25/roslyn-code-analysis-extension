@@ -10,6 +10,7 @@ namespace RoslynCodeAnalysis
 {
     public sealed class Adornment : Border
     {
+        private readonly TextBlock _classes = CreateBlocks(Colors.IndianRed);
         private readonly TextBlock _methods = CreateBlocks(Colors.Green);
         private readonly TextBlock _properties = CreateBlocks(Colors.DarkOrange);
         private readonly TextBlock _fields = CreateBlocks(Colors.CornflowerBlue);
@@ -20,6 +21,8 @@ namespace RoslynCodeAnalysis
             this.BorderThickness = new Thickness(0, 0, 0, 2);
             this.Padding = new Thickness(0, 0, 0, 3);
             this.Child = _panel;
+
+            _panel.Children.Add(_classes);
             _panel.Children.Add(_methods);
             _panel.Children.Add(_properties);
             _panel.Children.Add(_fields);
@@ -27,7 +30,7 @@ namespace RoslynCodeAnalysis
             this.Cursor = Cursors.Hand;
         }
 
-        public void SetValues(int errors, string methodText, string propText, string fieldText)
+        public void SetValues(int errors, string classText, string methodText, string propText, string fieldText)
         {
             if (errors != 0) return;
             SetValue(_methods, methodText);
