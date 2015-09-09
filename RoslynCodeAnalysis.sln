@@ -1,0 +1,35 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoslynCodeAnalysis", "RoslynCodeAnalysis\RoslynCodeAnalysis.csproj", "{BA8F2C29-FFBF-4C70-A180-E5E22C02B7C1}"
+	ProjectSection(ProjectDependencies) = postProject
+		{ED72EF51-BDEC-4F91-B3C0-983D7F985F09} = {ED72EF51-BDEC-4F91-B3C0-983D7F985F09}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoslynCodeAnalysisExtension", "RoslynCodeAnalysisExtension\RoslynCodeAnalysisExtension.csproj", "{EC6E70C8-6843-4ED9-ABBD-913F1EF24F98}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoslynCodeAnalysis.Lib", "RoslynCodeAnalysis.Lib\RoslynCodeAnalysis.Lib.csproj", "{ED72EF51-BDEC-4F91-B3C0-983D7F985F09}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BA8F2C29-FFBF-4C70-A180-E5E22C02B7C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA8F2C29-FFBF-4C70-A180-E5E22C02B7C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA8F2C29-FFBF-4C70-A180-E5E22C02B7C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA8F2C29-FFBF-4C70-A180-E5E22C02B7C1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EC6E70C8-6843-4ED9-ABBD-913F1EF24F98}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC6E70C8-6843-4ED9-ABBD-913F1EF24F98}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC6E70C8-6843-4ED9-ABBD-913F1EF24F98}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC6E70C8-6843-4ED9-ABBD-913F1EF24F98}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED72EF51-BDEC-4F91-B3C0-983D7F985F09}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED72EF51-BDEC-4F91-B3C0-983D7F985F09}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED72EF51-BDEC-4F91-B3C0-983D7F985F09}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED72EF51-BDEC-4F91-B3C0-983D7F985F09}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
