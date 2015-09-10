@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Timers;
 using System.Windows.Controls;
@@ -106,14 +107,32 @@ namespace RoslynCodeAnalysis
                 var propText = string.Format("{0} properties", analysisData.SelectMany(a => a.PropertyInfos).Count());
                 var fieldText = string.Format("{0} fields", analysisData.SelectMany(a => a.FieldInfos).Count());
                 _text.SetValues(errors, classText, methodText, propText, fieldText);
+                _displayMode++;
             }
             else
             {
                 _text.SetValues(errors, "---", "===", "|||", "xxx");
+                if ((_displayMode + 1) < 4)
+                {
+                    _displayMode++;
+                }
+                else
+                {
+                    _displayMode = 0;
+                }
+
+                WriteLog(_displayMode.ToString());
             }
 
             if (highlight)
                 await _text.Highlight();
+        }
+
+        private void WriteLog(string msg)
+        {
+            var writer = new StreamWriter(@"C:\Users\Karthik\Custom\roslyn\roslynlog.txt", true);
+            writer.WriteLine("Log " + msg);
+            writer.Close();
         }
 
         public IEnumerable<IVsTaskItem> GetErrorListItems()
