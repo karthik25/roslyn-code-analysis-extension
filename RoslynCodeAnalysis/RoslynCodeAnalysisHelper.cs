@@ -25,6 +25,8 @@ namespace RoslynCodeAnalysis
         private readonly Timer _timer;
         private SVsServiceProvider _serviceProvider;
 
+        private int _displayMode = 0;
+
         public RoslynCodeAnalysisHelper(IWpfTextView view, ITextDocument document, IVsTaskList tasks, DTE2 dte, SVsServiceProvider serviceProvider)
         {
             _view = view;
@@ -97,11 +99,18 @@ namespace RoslynCodeAnalysis
             }
 
             var analysisData = _document.FilePath.AnalyizeFile();
-            var classText = string.Format("{0} classes", analysisData.Count);
-            var methodText = string.Format("{0} methods", analysisData.SelectMany(a => a.MethodInfos).Count());
-            var propText = string.Format("{0} properties", analysisData.SelectMany(a => a.PropertyInfos).Count());
-            var fieldText = string.Format("{0} fields", analysisData.SelectMany(a => a.FieldInfos).Count());
-            _text.SetValues(errors, classText, methodText, propText, fieldText);
+            if (_displayMode == 0)
+            {
+                var classText = string.Format("{0} classes", analysisData.Count);
+                var methodText = string.Format("{0} methods", analysisData.SelectMany(a => a.MethodInfos).Count());
+                var propText = string.Format("{0} properties", analysisData.SelectMany(a => a.PropertyInfos).Count());
+                var fieldText = string.Format("{0} fields", analysisData.SelectMany(a => a.FieldInfos).Count());
+                _text.SetValues(errors, classText, methodText, propText, fieldText);
+            }
+            else
+            {
+                _text.SetValues(errors, "---", "===", "|||", "xxx");
+            }
 
             if (highlight)
                 await _text.Highlight();
