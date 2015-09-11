@@ -98,19 +98,19 @@ namespace RoslynCodeAnalysis
             string classText, methodText, propText, fieldText;
             if (_displayMode == 0)
             {
-                classText = string.Format("{0} classes", analysisData.Count);
-                methodText = string.Format("{0} methods", analysisData.SelectMany(a => a.MethodInfos).Count());
-                propText = string.Format("{0} properties", analysisData.SelectMany(a => a.PropertyInfos).Count());
-                fieldText = string.Format("{0} fields", analysisData.SelectMany(a => a.FieldInfos).Count());
+                classText = analysisData.Count.Pluralize("class");
+                methodText = analysisData.SelectMany(a => a.MethodInfos).Count().Pluralize("method");
+                propText = analysisData.SelectMany(a => a.PropertyInfos).Count().Pluralize("property");
+                fieldText = analysisData.SelectMany(a => a.FieldInfos).Count().Pluralize("field");
                 _timer.Interval = 15000;
             }
             else
             {
                 var requiredClass = analysisData[(_displayMode - 1)];
                 classText = requiredClass.Name;
-                methodText = string.Format("{0} methods", requiredClass.MethodInfos.Count);
-                propText = string.Format("{0} properties", requiredClass.PropertyInfos.Count);
-                fieldText = string.Format("{0} fields", requiredClass.FieldInfos.Count);
+                methodText = requiredClass.MethodInfos.Count.Pluralize("method");
+                propText = requiredClass.PropertyInfos.Count.Pluralize("property");
+                fieldText = requiredClass.FieldInfos.Count.Pluralize("field");
             }
 
             _text.SetValues(errors, classText, methodText, propText, fieldText);
