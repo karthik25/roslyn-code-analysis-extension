@@ -80,8 +80,6 @@ namespace RoslynCodeAnalysis
         private async void UpdateAdornment(bool highlight)
         {
             var errors = 0;
-            var warnings = 0;
-            var messages = 0;
 
             foreach (var item in GetErrorListItems())
             {
@@ -94,41 +92,30 @@ namespace RoslynCodeAnalysis
                 uint errorCategory;
                 errorItem.GetCategory(out errorCategory);
                 if (errorCategory == (uint)__VSERRORCATEGORY.EC_ERROR) errors++;
-                if (errorCategory == (uint)__VSERRORCATEGORY.EC_WARNING) warnings++;
-                if (errorCategory == (uint)__VSERRORCATEGORY.EC_MESSAGE) messages++;
             }
 
             var analysisData = _document.FilePath.AnalyizeFile();
+            string classText, methodText, propText, fieldText;
             if (_displayMode == 0)
             {
-                var classText = string.Format("{0} classes", analysisData.Count);
-                var methodText = string.Format("{0} methods", analysisData.SelectMany(a => a.MethodInfos).Count());
-                var propText = string.Format("{0} properties", analysisData.SelectMany(a => a.PropertyInfos).Count());
-                var fieldText = string.Format("{0} fields", analysisData.SelectMany(a => a.FieldInfos).Count());
-                _text.SetValues(errors, classText, methodText, propText, fieldText);
+                classText = string.Format("{0} classes", analysisData.Count);
+                methodText = string.Format("{0} methods", analysisData.SelectMany(a => a.MethodInfos).Count());
+                propText = string.Format("{0} properties", analysisData.SelectMany(a => a.PropertyInfos).Count());
+                fieldText = string.Format("{0} fields", analysisData.SelectMany(a => a.FieldInfos).Count());
                 _timer.Interval = 15000;
-            }
-            else if (_displayMode == 1)
-            {
-                _text.SetValues(errors, "---", "===", "|||", "xxx");                
-            }
-            else if (_displayMode == 2)
-            {
-                _text.SetValues(errors, "===", "|||", "xxx", "---");
-            }
-            else if (_displayMode == 3)
-            {
-                _text.SetValues(errors, "|||", "xxx", "---", "===");
-            }
-
-            if ((_displayMode + 1) < 4)
-            {
-                _displayMode++;
             }
             else
             {
-                _displayMode = 0;
+                var requiredClass = analysisData[(_displayMode - 1)];
+                classText = requiredClass.Name;
+                methodText = string.Format("{0} methods", requiredClass.MethodInfos.Count);
+                propText = string.Format("{0} properties", requiredClass.PropertyInfos.Count);
+                fieldText = string.Format("{0} fields", requiredClass.FieldInfos.Count);
             }
+
+            _text.SetValues(errors, classText, methodText, propText, fieldText);
+            var maxCount = 1 + analysisData.Count;
+            _displayMode = _displayMode.Cycle(maxCount);
 
             if (highlight)
                 await _text.Highlight();

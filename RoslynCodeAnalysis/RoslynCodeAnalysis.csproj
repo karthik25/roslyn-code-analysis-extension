@@ -69,6 +69,7 @@
     <Compile Include="Adornment.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RoslynCodeAnalysisFactory.cs" />
+    <Compile Include="RoslynCodeAnalysisFluentExtensions.cs" />
     <Compile Include="RoslynCodeAnalysisHelper.cs" />
   </ItemGroup>
   <ItemGroup>
