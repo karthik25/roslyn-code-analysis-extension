@@ -14,6 +14,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoslynCodeAnalysis.Contract
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoslynCodeAnalysis.SimpleLogger", "RoslynCodeAnalysis.SimpleLogger\RoslynCodeAnalysis.SimpleLogger.csproj", "{8D8E3D0D-3A02-4690-B8C3-C6BE074B62BE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoslynCodeAnalysis.Tests", "RoslynCodeAnalysis.Tests\RoslynCodeAnalysis.Tests.csproj", "{5F683E4B-5511-45A2-A8DA-6BC82839F13A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -40,6 +42,10 @@ Global
 		{8D8E3D0D-3A02-4690-B8C3-C6BE074B62BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8D8E3D0D-3A02-4690-B8C3-C6BE074B62BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8D8E3D0D-3A02-4690-B8C3-C6BE074B62BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F683E4B-5511-45A2-A8DA-6BC82839F13A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F683E4B-5511-45A2-A8DA-6BC82839F13A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F683E4B-5511-45A2-A8DA-6BC82839F13A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F683E4B-5511-45A2-A8DA-6BC82839F13A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
