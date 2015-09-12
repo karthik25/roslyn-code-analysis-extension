@@ -39,6 +39,15 @@ namespace RoslynCodeAnalysis
             SetValue(_fields, fieldText);
         }
 
+        public void SetValues(int errors, AdornmentData adornmentData)
+        {
+            if (errors != 0) return;
+            SetValue(_classes, adornmentData.ClassText);
+            SetValue(_methods, adornmentData.MethodText);
+            SetValue(_properties, adornmentData.PropertyText);
+            SetValue(_fields, adornmentData.FieldText);
+        }
+
         private static void SetValue(TextBlock block, string text)
         {
             block.Text = text;
@@ -70,5 +79,13 @@ namespace RoslynCodeAnalysis
 
             }), DispatcherPriority.ApplicationIdle, null);
         }
+    }
+
+    public class AdornmentData
+    {
+        public string ClassText { get; set; }
+        public string MethodText { get; set; }
+        public string PropertyText { get; set; }
+        public string FieldText { get; set; }
     }
 }

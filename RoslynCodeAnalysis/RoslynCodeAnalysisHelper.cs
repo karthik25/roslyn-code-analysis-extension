@@ -95,25 +95,31 @@ namespace RoslynCodeAnalysis
             }
 
             var analysisData = _document.FilePath.AnalyizeFile();
-            string classText, methodText, propText, fieldText;
+            AdornmentData adornmentData = null;
             if (_displayMode == 0)
             {
-                classText = analysisData.Count.Pluralize("class");
-                methodText = analysisData.SelectMany(a => a.MethodInfos).Count().Pluralize("method");
-                propText = analysisData.SelectMany(a => a.PropertyInfos).Count().Pluralize("property");
-                fieldText = analysisData.SelectMany(a => a.FieldInfos).Count().Pluralize("field");
+                adornmentData = new AdornmentData
+                    {
+                        ClassText = analysisData.Count.Pluralize("class"),
+                        MethodText = analysisData.SelectMany(a => a.MethodInfos).Count().Pluralize("method"),
+                        PropertyText = analysisData.SelectMany(a => a.PropertyInfos).Count().Pluralize("property"),
+                        FieldText = analysisData.SelectMany(a => a.FieldInfos).Count().Pluralize("field")
+                    };
                 _timer.Interval = 15000;
             }
             else
             {
                 var requiredClass = analysisData[(_displayMode - 1)];
-                classText = requiredClass.Name;
-                methodText = requiredClass.MethodInfos.Count.Pluralize("method");
-                propText = requiredClass.PropertyInfos.Count.Pluralize("property");
-                fieldText = requiredClass.FieldInfos.Count.Pluralize("field");
+                adornmentData = new AdornmentData
+                {
+                    ClassText = requiredClass.Name,
+                    MethodText = requiredClass.MethodInfos.Count.Pluralize("method"),
+                    PropertyText = requiredClass.PropertyInfos.Count.Pluralize("property"),
+                    FieldText = requiredClass.FieldInfos.Count.Pluralize("field")
+                };
             }
 
-            _text.SetValues(errors, classText, methodText, propText, fieldText);
+            _text.SetValues(errors, adornmentData);
             var maxCount = 1 + analysisData.Count;
             _displayMode = _displayMode.Cycle(maxCount);
 
