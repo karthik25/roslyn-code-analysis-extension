@@ -94,8 +94,8 @@ namespace RoslynCodeAnalysis
                 if (errorCategory == (uint)__VSERRORCATEGORY.EC_ERROR) errors++;
             }
 
-            var analysisData = _document.FilePath.AnalyizeFile();
-            AdornmentData adornmentData = null;
+            var analysisData = _document.FilePath.AnalyzeFile();
+            AdornmentData adornmentData;
             if (_displayMode == 0)
             {
                 adornmentData = new AdornmentData

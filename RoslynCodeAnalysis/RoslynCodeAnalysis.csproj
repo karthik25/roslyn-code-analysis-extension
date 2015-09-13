@@ -70,6 +70,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Adornment.cs" />
+    <Compile Include="AdornmentData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RoslynCodeAnalysisFactory.cs" />
     <Compile Include="RoslynCodeAnalysisFluentExtensions.cs" />

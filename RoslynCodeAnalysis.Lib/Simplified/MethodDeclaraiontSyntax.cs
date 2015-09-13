@@ -2,6 +2,6 @@
 {
     public class MethodDeclaraiontSyntax : BaseDeclarationSyntax
     {
-        
+        public int LineCount { get; set; }
     }
 }

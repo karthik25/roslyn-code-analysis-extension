@@ -30,15 +30,6 @@ namespace RoslynCodeAnalysis
             this.Cursor = Cursors.Hand;
         }
 
-        public void SetValues(int errors, string classText, string methodText, string propText, string fieldText)
-        {
-            if (errors != 0) return;
-            SetValue(_classes, classText);
-            SetValue(_methods, methodText);
-            SetValue(_properties, propText);
-            SetValue(_fields, fieldText);
-        }
-
         public void SetValues(int errors, AdornmentData adornmentData)
         {
             if (errors != 0) return;
@@ -51,6 +42,7 @@ namespace RoslynCodeAnalysis
         private static void SetValue(TextBlock block, string text)
         {
             block.Text = text;
+            block.ToolTip = "Click here!";
         }
 
         private static TextBlock CreateBlocks(Color color)
@@ -79,13 +71,5 @@ namespace RoslynCodeAnalysis
 
             }), DispatcherPriority.ApplicationIdle, null);
         }
-    }
-
-    public class AdornmentData
-    {
-        public string ClassText { get; set; }
-        public string MethodText { get; set; }
-        public string PropertyText { get; set; }
-        public string FieldText { get; set; }
     }
 }

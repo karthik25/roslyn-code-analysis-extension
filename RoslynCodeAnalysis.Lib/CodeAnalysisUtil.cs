@@ -8,7 +8,7 @@ namespace RoslynCodeAnalysis.Lib
 {
     public static class CodeAnalysisUtil
     {
-        public static IList<Simplified.ClassDeclarationSyntax> AnalyizeFile(this string fullPath)
+        public static IList<Simplified.ClassDeclarationSyntax> AnalyzeFile(this string fullPath)
         {
             var text = File.ReadAllText(fullPath);
             var tree = CSharpSyntaxTree.ParseText(text);
@@ -37,7 +37,8 @@ namespace RoslynCodeAnalysis.Lib
                 foreach (var methodInfo in methodTypes.Select(methodType => new Simplified.MethodDeclaraiontSyntax
                     {
                         Name = methodType.Identifier.ToString(),
-                        Modifiers = string.Join(",", methodType.Modifiers.Select(m => m.Text).ToArray())
+                        Modifiers = string.Join(",", methodType.Modifiers.Select(m => m.Text).ToArray()),
+                        LineCount = methodType.Body != null ? methodType.Body.ToString().Split('\n').Count() : 0
                     }))
                 {
                     classInfo.MethodInfos.Add(methodInfo);
