@@ -34,12 +34,12 @@ namespace RoslynCodeAnalysis
         {
             if (errors != 0) return;
             SetValue(_classes, adornmentData.ClassText);
-            SetValue(_methods, adornmentData.MethodText);
+            SetValue(_methods, adornmentData.MethodText, adornmentData.MethodTextTooltip);
             SetValue(_properties, adornmentData.PropertyText);
             SetValue(_fields, adornmentData.FieldText);
         }
 
-        private static void SetValue(TextBlock block, string text)
+        private static void SetValue(TextBlock block, string text, string toolTip = "")
         {
             block.Text = text;
             block.ToolTip = "Click here!";

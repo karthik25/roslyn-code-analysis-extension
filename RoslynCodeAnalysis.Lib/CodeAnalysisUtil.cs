@@ -29,6 +29,7 @@ namespace RoslynCodeAnalysis.Lib
                     Name = classType.Identifier.ToString(),
                     FileName = fullPath,
                     Modifiers = string.Join(",", classType.Modifiers.Select(m => m.Text).ToArray()),
+                    SyntaxTree = classType,
                     MethodInfos = new List<Simplified.MethodDeclaraiontSyntax>(),
                     FieldInfos = new List<Simplified.FieldDeclaraiontSyntax>(),
                     PropertyInfos = new List<Simplified.PropertyDeclaraiontSyntax>()

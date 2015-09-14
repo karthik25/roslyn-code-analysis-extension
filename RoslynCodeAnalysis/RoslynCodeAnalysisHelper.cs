@@ -115,7 +115,10 @@ namespace RoslynCodeAnalysis
                     ClassText = requiredClass.Name,
                     MethodText = requiredClass.MethodInfos.Count.Pluralize("method"),
                     PropertyText = requiredClass.PropertyInfos.Count.Pluralize("property"),
-                    FieldText = requiredClass.FieldInfos.Count.Pluralize("field")
+                    FieldText = requiredClass.FieldInfos.Count.Pluralize("field"),
+                    MethodTextTooltip = requiredClass.MethodInfos != null && requiredClass.MethodInfos.Any(m => m.LineCount > 5) 
+                                                ? requiredClass.MethodInfos.First(m => m.LineCount > 5).Name 
+                                                : string.Empty
                 };
             }
 
