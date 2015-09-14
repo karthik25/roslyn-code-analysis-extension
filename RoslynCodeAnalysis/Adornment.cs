@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -42,7 +43,8 @@ namespace RoslynCodeAnalysis
         private static void SetValue(TextBlock block, string text, string toolTip = "")
         {
             block.Text = text;
-            block.ToolTip = "Click here!";
+            if (!string.IsNullOrEmpty(toolTip))
+                block.ToolTip = toolTip;
         }
 
         private static TextBlock CreateBlocks(Color color)

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Timers;
 using System.Windows.Controls;
@@ -95,7 +96,7 @@ namespace RoslynCodeAnalysis
             }
 
             var analysisData = _document.FilePath.AnalyzeFile();
-            AdornmentData adornmentData;
+            AdornmentData adornmentData = null;
             if (_displayMode == 0)
             {
                 adornmentData = new AdornmentData
@@ -116,8 +117,10 @@ namespace RoslynCodeAnalysis
                     MethodText = requiredClass.MethodInfos.Count.Pluralize("method"),
                     PropertyText = requiredClass.PropertyInfos.Count.Pluralize("property"),
                     FieldText = requiredClass.FieldInfos.Count.Pluralize("field"),
-                    MethodTextTooltip = requiredClass.MethodInfos != null && requiredClass.MethodInfos.Any(m => m.LineCount > 5) 
-                                                ? requiredClass.MethodInfos.First(m => m.LineCount > 5).Name 
+                    MethodTextTooltip = requiredClass.MethodInfos != null && requiredClass.MethodInfos.Count > 0 && requiredClass.MethodInfos.Any(m => m.LineCount > 5)
+                                                ? string.Format("{0} method has {1} lines, consider refactoring!",
+                                                        requiredClass.MethodInfos.First(m => m.LineCount > 5).Name,
+                                                        requiredClass.MethodInfos.First(m => m.LineCount > 5).LineCount)
                                                 : string.Empty
                 };
             }
