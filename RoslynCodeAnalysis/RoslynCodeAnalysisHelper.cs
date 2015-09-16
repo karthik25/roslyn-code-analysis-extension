@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Timers;
 using System.Windows.Controls;
@@ -11,6 +10,7 @@ using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Editor;
 using RoslynCodeAnalysis.Lib;
+using Constants = RoslynCodeAnalysis.Lib.Rules;
 
 namespace RoslynCodeAnalysis
 {
@@ -100,12 +100,12 @@ namespace RoslynCodeAnalysis
             if (_displayMode == 0)
             {
                 adornmentData = new AdornmentData
-                    {
-                        ClassText = analysisData.Count.Pluralize("class"),
-                        MethodText = analysisData.SelectMany(a => a.MethodInfos).Count().Pluralize("method"),
-                        PropertyText = analysisData.SelectMany(a => a.PropertyInfos).Count().Pluralize("property"),
-                        FieldText = analysisData.SelectMany(a => a.FieldInfos).Count().Pluralize("field")
-                    };
+                {
+                    ClassText = analysisData.Count.Pluralize("class"),
+                    MethodText = analysisData.SelectMany(a => a.MethodInfos).Count().Pluralize("method"),
+                    PropertyText = analysisData.SelectMany(a => a.PropertyInfos).Count().Pluralize("property"),
+                    FieldText = analysisData.SelectMany(a => a.FieldInfos).Count().Pluralize("field")
+                };
                 _timer.Interval = 15000;
             }
             else
@@ -117,10 +117,10 @@ namespace RoslynCodeAnalysis
                     MethodText = requiredClass.MethodInfos.Count.Pluralize("method"),
                     PropertyText = requiredClass.PropertyInfos.Count.Pluralize("property"),
                     FieldText = requiredClass.FieldInfos.Count.Pluralize("field"),
-                    MethodTextTooltip = requiredClass.MethodInfos != null && requiredClass.MethodInfos.Count > 0 && requiredClass.MethodInfos.Any(m => m.LineCount > 5)
+                    MethodTextTooltip = requiredClass.MethodInfos != null && requiredClass.MethodInfos.Count > 0 && requiredClass.MethodInfos.Any(m => m.LineCount > Constants.Method.IdealLineCount)
                                                 ? string.Format("{0} method has {1} lines, consider refactoring!",
-                                                        requiredClass.MethodInfos.First(m => m.LineCount > 5).Name,
-                                                        requiredClass.MethodInfos.First(m => m.LineCount > 5).LineCount)
+                                                        requiredClass.MethodInfos.First(m => m.LineCount > Constants.Method.IdealLineCount).Name,
+                                                        requiredClass.MethodInfos.First(m => m.LineCount > Constants.Method.IdealLineCount).LineCount)
                                                 : string.Empty
                 };
             }
