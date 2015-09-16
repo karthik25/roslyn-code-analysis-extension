@@ -53,8 +53,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CodeAnalysisUtil.cs" />
-    <Compile Include="Parser\RuleParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Rules\Class.cs" />
+    <Compile Include="Rules\Method.cs" />
     <Compile Include="Simplified\BaseDeclarationSyntax.cs" />
     <Compile Include="Simplified\ClassDeclarationSyntax.cs" />
     <Compile Include="Simplified\FieldDeclaraiontSyntax.cs" />
