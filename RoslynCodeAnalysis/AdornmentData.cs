@@ -7,6 +7,7 @@
         public string PropertyText { get; set; }
         public string FieldText { get; set; }
 
+        public string ClassTextTooltip { get; set; }
         public string MethodTextTooltip { get; set; }
     }
 }

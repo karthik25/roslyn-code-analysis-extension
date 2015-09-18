@@ -11,10 +11,10 @@ namespace RoslynCodeAnalysis
 {
     public sealed class Adornment : Border
     {
-        private readonly TextBlock _classes = CreateBlocks(Colors.IndianRed);
-        private readonly TextBlock _methods = CreateBlocks(Colors.Green);
-        private readonly TextBlock _properties = CreateBlocks(Colors.DarkOrange);
-        private readonly TextBlock _fields = CreateBlocks(Colors.CornflowerBlue);
+        private readonly TextBlock _classes = CreateBlock(Colors.IndianRed);
+        private readonly TextBlock _methods = CreateBlock(Colors.Green);
+        private readonly TextBlock _properties = CreateBlock(Colors.DarkOrange);
+        private readonly TextBlock _fields = CreateBlock(Colors.CornflowerBlue);
         private readonly StackPanel _panel = new StackPanel();
 
         public Adornment()
@@ -34,20 +34,25 @@ namespace RoslynCodeAnalysis
         public void SetValues(int errors, AdornmentData adornmentData)
         {
             if (errors != 0) return;
-            SetValue(_classes, adornmentData.ClassText);
+            SetValue(_classes, adornmentData.ClassText, adornmentData.ClassTextTooltip);
             SetValue(_methods, adornmentData.MethodText, adornmentData.MethodTextTooltip);
             SetValue(_properties, adornmentData.PropertyText);
             SetValue(_fields, adornmentData.FieldText);
         }
 
-        private static void SetValue(TextBlock block, string text, string toolTip = "")
+        private static void SetValue(TextBlock block, string text, string toolTip = null)
         {
-            block.Text = text;
+            var displayText = text;
             if (!string.IsNullOrEmpty(toolTip))
-                block.ToolTip = toolTip;
+            {
+                displayText += " (*)";
+                block.FontWeight = FontWeights.ExtraBold;
+            }
+            block.Text = displayText;
+            block.ToolTip = string.IsNullOrEmpty(toolTip) ? displayText : toolTip;
         }
 
-        private static TextBlock CreateBlocks(Color color)
+        private static TextBlock CreateBlock(Color color)
         {
             return new TextBlock
             {

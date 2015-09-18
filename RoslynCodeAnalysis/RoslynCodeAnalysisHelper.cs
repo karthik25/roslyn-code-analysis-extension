@@ -121,6 +121,9 @@ namespace RoslynCodeAnalysis
                                                 ? string.Format("{0} method has {1} lines, consider refactoring!",
                                                         requiredClass.MethodInfos.First(m => m.LineCount > Constants.Method.IdealLineCount).Name,
                                                         requiredClass.MethodInfos.First(m => m.LineCount > Constants.Method.IdealLineCount).LineCount)
+                                                : string.Empty,
+                    ClassTextTooltip = requiredClass.MethodInfos != null && requiredClass.MethodInfos.Count > Constants.Class.IdealMethodCount 
+                                                ? string.Format("{0} has {1} methods, consider splitting this class up", requiredClass.Name, requiredClass.MethodInfos.Count) 
                                                 : string.Empty
                 };
             }
