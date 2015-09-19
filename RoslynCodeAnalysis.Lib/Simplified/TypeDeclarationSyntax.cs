@@ -2,7 +2,7 @@
 
 namespace RoslynCodeAnalysis.Lib.Simplified
 {
-    public class ClassDeclarationSyntax : BaseDeclarationSyntax
+    public class TypeDeclarationSyntax : BaseDeclarationSyntax
     {
         public string NameSpace { get; set; }
         public bool IsNested { get; set; }

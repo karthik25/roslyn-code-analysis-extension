@@ -57,7 +57,7 @@
     <Compile Include="Rules\Class.cs" />
     <Compile Include="Rules\Method.cs" />
     <Compile Include="Simplified\BaseDeclarationSyntax.cs" />
-    <Compile Include="Simplified\ClassDeclarationSyntax.cs" />
+    <Compile Include="Simplified\TypeDeclarationSyntax.cs" />
     <Compile Include="Simplified\FieldDeclaraiontSyntax.cs" />
     <Compile Include="Simplified\MethodDeclaraiontSyntax.cs" />
     <Compile Include="Simplified\PropertyDeclaraiontSyntax.cs" />

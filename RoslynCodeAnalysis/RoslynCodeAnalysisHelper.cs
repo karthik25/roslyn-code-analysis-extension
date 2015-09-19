@@ -101,16 +101,16 @@ namespace RoslynCodeAnalysis
             {
                 adornmentData = new AdornmentData
                 {
-                    ClassText = analysisData.Count.Pluralize("class"),
-                    MethodText = analysisData.SelectMany(a => a.MethodInfos).Count().Pluralize("method"),
-                    PropertyText = analysisData.SelectMany(a => a.PropertyInfos).Count().Pluralize("property"),
-                    FieldText = analysisData.SelectMany(a => a.FieldInfos).Count().Pluralize("field")
+                    ClassText = analysisData.Classes.Count.Pluralize("class"),
+                    MethodText = analysisData.Classes.SelectMany(a => a.MethodInfos).Count().Pluralize("method"),
+                    PropertyText = analysisData.Classes.SelectMany(a => a.PropertyInfos).Count().Pluralize("property"),
+                    FieldText = analysisData.Classes.SelectMany(a => a.FieldInfos).Count().Pluralize("field")
                 };
                 _timer.Interval = 15000;
             }
             else
             {
-                var requiredClass = analysisData[(_displayMode - 1)];
+                var requiredClass = analysisData.Classes[(_displayMode - 1)];
                 adornmentData = new AdornmentData
                 {
                     ClassText = requiredClass.Name,
@@ -129,7 +129,7 @@ namespace RoslynCodeAnalysis
             }
 
             _text.SetValues(errors, adornmentData);
-            var maxCount = 1 + analysisData.Count;
+            var maxCount = 1 + analysisData.Classes.Count;
             _displayMode = _displayMode.Cycle(maxCount);
 
             if (highlight)

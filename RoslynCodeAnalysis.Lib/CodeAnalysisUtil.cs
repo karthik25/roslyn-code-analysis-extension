@@ -3,18 +3,23 @@ using System.IO;
 using System.Linq;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using TypeDeclarationSyntax = RoslynCodeAnalysis.Lib.Simplified.TypeDeclarationSyntax;
 
 namespace RoslynCodeAnalysis.Lib
 {
     public static class CodeAnalysisUtil
     {
-        public static IList<Simplified.ClassDeclarationSyntax> AnalyzeFile(this string fullPath)
+        public static AnalysisDetails AnalyzeFile(this string fullPath)
         {
             var text = File.ReadAllText(fullPath);
             var tree = CSharpSyntaxTree.ParseText(text);
             var root = tree.GetRoot();
 
-            var typeList = new List<Simplified.ClassDeclarationSyntax>();
+            var analysisDetails = new AnalysisDetails
+                {
+                    Classes = new List<TypeDeclarationSyntax>(),
+                    Interfaces = new List<TypeDeclarationSyntax>()
+                };
 
             var classTypes = root.DescendantNodes().OfType<ClassDeclarationSyntax>();
 
@@ -22,7 +27,7 @@ namespace RoslynCodeAnalysis.Lib
             {
                 var isNestedNamespace = false;
                 var nameSpace = classType.GetNamespace(out isNestedNamespace);
-                var classInfo = new Simplified.ClassDeclarationSyntax
+                var classInfo = new Simplified.TypeDeclarationSyntax
                 {
                     NameSpace = nameSpace.Name.ToString(),
                     IsNested = isNestedNamespace,
@@ -62,11 +67,17 @@ namespace RoslynCodeAnalysis.Lib
                 {
                     classInfo.FieldInfos.Add(fieldInfo);
                 }
-                
-                typeList.Add(classInfo);
+
+                analysisDetails.Classes.Add(classInfo);
             }
 
-            return typeList;
+            return analysisDetails;
         }
+    }
+
+    public class AnalysisDetails
+    {
+        public List<TypeDeclarationSyntax> Classes { get; set; }
+        public List<TypeDeclarationSyntax> Interfaces { get; set; }
     }
 }
