@@ -27,7 +27,7 @@ namespace RoslynCodeAnalysis.Lib
             {
                 var isNestedNamespace = false;
                 var nameSpace = classType.GetNamespace(out isNestedNamespace);
-                var classInfo = new Simplified.TypeDeclarationSyntax
+                var classInfo = new TypeDeclarationSyntax
                 {
                     NameSpace = nameSpace.Name.ToString(),
                     IsNested = isNestedNamespace,
@@ -71,13 +71,49 @@ namespace RoslynCodeAnalysis.Lib
                 analysisDetails.Classes.Add(classInfo);
             }
 
+            var interfaceTypes = root.DescendantNodes().OfType<InterfaceDeclarationSyntax>();
+
+            foreach (var interfaceType in interfaceTypes)
+            {
+                var isNestedNamespace = false;
+                var nameSpace = interfaceType.GetNamespace(out isNestedNamespace);
+                var interfaceInfo = new TypeDeclarationSyntax
+                {
+                    NameSpace = nameSpace.Name.ToString(),
+                    IsNested = isNestedNamespace,
+                    Name = interfaceType.Identifier.ToString(),
+                    FileName = fullPath,
+                    Modifiers = string.Join(",", interfaceType.Modifiers.Select(m => m.Text).ToArray()),
+                    SyntaxTree = interfaceType,
+                    MethodInfos = new List<Simplified.MethodDeclaraiontSyntax>(),
+                    PropertyInfos = new List<Simplified.PropertyDeclaraiontSyntax>(),
+                    IsInterface = true
+                };
+
+                var methodTypes = interfaceType.DescendantNodes().OfType<MethodDeclarationSyntax>();
+                foreach (var methodInfo in methodTypes.Select(methodType => new Simplified.MethodDeclaraiontSyntax
+                {
+                    Name = methodType.Identifier.ToString(),
+                    Modifiers = string.Join(",", methodType.Modifiers.Select(m => m.Text).ToArray()),
+                    LineCount = methodType.Body != null ? methodType.Body.ToString().Split('\n').Count() : 0
+                }))
+                {
+                    interfaceInfo.MethodInfos.Add(methodInfo);
+                }
+                var propertyTypes = interfaceType.DescendantNodes().OfType<PropertyDeclarationSyntax>();
+                foreach (var propInfo in propertyTypes.Select(propertyType => new Simplified.PropertyDeclaraiontSyntax
+                {
+                    Name = propertyType.Identifier.ToString(),
+                    Modifiers = string.Join(",", propertyType.Modifiers.Select(m => m.Text).ToArray())
+                }))
+                {
+                    interfaceInfo.PropertyInfos.Add(propInfo);
+                }
+
+                analysisDetails.Interfaces.Add(interfaceInfo);
+            }
+
             return analysisDetails;
         }
-    }
-
-    public class AnalysisDetails
-    {
-        public List<TypeDeclarationSyntax> Classes { get; set; }
-        public List<TypeDeclarationSyntax> Interfaces { get; set; }
     }
 }
