@@ -32,6 +32,7 @@ namespace RoslynCodeAnalysis
         {
             var tasks = serviceProvider.GetService(typeof(SVsErrorList)) as IVsTaskList;
             var dte = serviceProvider.GetService(typeof(DTE)) as DTE2;
+            var log = serviceProvider.GetService(typeof (SVsActivityLog)) as IVsActivityLog;
 
             ITextDocument document;
             if (!TextDocumentFactoryService.TryGetTextDocument(textView.TextDataModel.DocumentBuffer, out document))
@@ -40,7 +41,7 @@ namespace RoslynCodeAnalysis
             if (Path.GetExtension(document.FilePath) != ".cs")
                 return;
             
-            var highlighter = new RoslynCodeAnalysisHelper(textView, document, tasks, dte, serviceProvider);
+            var highlighter = new RoslynCodeAnalysisHelper(textView, document, tasks, dte, serviceProvider, log);
 
             // On file save (B)
             document.FileActionOccurred += (s, e) =>

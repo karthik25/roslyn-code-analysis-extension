@@ -25,16 +25,18 @@ namespace RoslynCodeAnalysis
         private bool _processing;
         private readonly Timer _timer;
         private SVsServiceProvider _serviceProvider;
+        private readonly IVsActivityLog _log;
 
         private int _displayMode = 0;
 
-        public RoslynCodeAnalysisHelper(IWpfTextView view, ITextDocument document, IVsTaskList tasks, DTE2 dte, SVsServiceProvider serviceProvider)
+        public RoslynCodeAnalysisHelper(IWpfTextView view, ITextDocument document, IVsTaskList tasks, DTE2 dte, SVsServiceProvider serviceProvider, IVsActivityLog log)
         {
             _view = view;
             _document = document;
             _text = new Adornment();
             _tasks = tasks;
             _serviceProvider = serviceProvider;
+            _log = log;
             _dispatcher = Dispatcher.CurrentDispatcher;
 
             _adornmentLayer = view.GetAdornmentLayer(RoslynCodeAnalysisFactory.LayerName);
@@ -99,6 +101,8 @@ namespace RoslynCodeAnalysis
             AdornmentData adornmentData = null;
             if (_displayMode == 0)
             {
+                _log.LogEntry((uint)__ACTIVITYLOG_ENTRYTYPE.ALE_INFORMATION, "RoslynCodeAnalysisExtension",
+                              "Initial adornment data displayed");
                 adornmentData = new AdornmentData
                 {
                     ClassText = analysisData.Classes.Count.Pluralize("class"),
