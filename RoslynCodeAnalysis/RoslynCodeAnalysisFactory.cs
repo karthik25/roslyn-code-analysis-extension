@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.Composition;
+﻿using System;
+using System.ComponentModel.Composition;
 using System.IO;
 using EnvDTE;
 using EnvDTE80;
@@ -34,21 +35,32 @@ namespace RoslynCodeAnalysis
             var dte = serviceProvider.GetService(typeof(DTE)) as DTE2;
             var log = serviceProvider.GetService(typeof (SVsActivityLog)) as IVsActivityLog;
 
-            ITextDocument document;
-            if (!TextDocumentFactoryService.TryGetTextDocument(textView.TextDataModel.DocumentBuffer, out document))
-                return;
+            try
+            {
+                ITextDocument document;
+                if (!TextDocumentFactoryService.TryGetTextDocument(textView.TextDataModel.DocumentBuffer, out document))
+                    return;
 
-            if (Path.GetExtension(document.FilePath) != ".cs")
-                return;
+                if (Path.GetExtension(document.FilePath) != ".cs")
+                    return;
             
-            var highlighter = new RoslynCodeAnalysisHelper(textView, document, tasks, dte, serviceProvider, log);
+                var highlighter = new RoslynCodeAnalysisHelper(textView, document, tasks, dte, serviceProvider, log);
 
-            // On file save (B)
-            document.FileActionOccurred += (s, e) =>
+                // On file save (B)
+                document.FileActionOccurred += (s, e) =>
+                    {
+                        if (e.FileActionType == FileActionTypes.ContentSavedToDisk)
+                            highlighter.Update(true);
+                    };
+            }
+            catch (Exception exception)
+            {
+                if (log != null)
                 {
-                    if (e.FileActionType == FileActionTypes.ContentSavedToDisk)
-                        highlighter.Update(true);
-                };
+                    log.LogEntry((uint)__ACTIVITYLOG_ENTRYTYPE.ALE_ERROR, "RoslynCodeAnalysisExtension",
+                                 "Exception: " + exception);
+                }
+            }
         }
     }
 }
