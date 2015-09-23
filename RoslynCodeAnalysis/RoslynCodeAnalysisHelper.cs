@@ -99,6 +99,7 @@ namespace RoslynCodeAnalysis
 
             var analysisData = _document.FilePath.AnalyzeFile();
             AdornmentData adornmentData = null;
+            var overallCount = analysisData.Interfaces != null && analysisData.Interfaces.Count > 0 ? 2 : 1;
             if (_displayMode == 0)
             {
                 _log.LogEntry((uint)__ACTIVITYLOG_ENTRYTYPE.ALE_INFORMATION, "RoslynCodeAnalysisExtension",
@@ -112,9 +113,19 @@ namespace RoslynCodeAnalysis
                 };
                 _timer.Interval = 15000;
             }
+            else if (overallCount > 1 && _displayMode == 1 && analysisData.Interfaces != null)
+            {
+                adornmentData = new AdornmentData
+                {
+                    ClassText = analysisData.Interfaces.Count.Pluralize("interface"),
+                    MethodText = analysisData.Interfaces.SelectMany(a => a.MethodInfos).Count().Pluralize("method"),
+                    PropertyText = analysisData.Interfaces.SelectMany(a => a.PropertyInfos).Count().Pluralize("property"),
+                    FieldText = string.Empty
+                };
+            }
             else
             {
-                var requiredClass = analysisData.Classes[(_displayMode - 1)];
+                var requiredClass = analysisData.Classes[(_displayMode - overallCount)];
                 adornmentData = new AdornmentData
                 {
                     ClassText = requiredClass.Name,
@@ -133,7 +144,7 @@ namespace RoslynCodeAnalysis
             }
 
             _text.SetValues(errors, adornmentData);
-            var maxCount = 1 + analysisData.Classes.Count;
+            var maxCount = overallCount + analysisData.Classes.Count;
             _displayMode = _displayMode.Cycle(maxCount);
 
             if (highlight)
