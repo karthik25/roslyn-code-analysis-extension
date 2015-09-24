@@ -40,6 +40,14 @@ namespace RoslynCodeAnalysis
             SetValue(_fields, adornmentData.FieldText);
         }
 
+        public void SetErrors(string errorText)
+        {
+            SetValue(_classes, errorText);
+            SetValue(_methods, string.Empty);
+            SetValue(_properties, string.Empty);
+            SetValue(_fields, string.Empty);
+        }
+
         private static void SetValue(TextBlock block, string text, string toolTip = null)
         {
             var displayText = text;

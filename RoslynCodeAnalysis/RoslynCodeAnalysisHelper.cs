@@ -92,9 +92,15 @@ namespace RoslynCodeAnalysis
                     continue;
 
                 var errorItem = item as IVsErrorItem;
-                uint errorCategory;
-                errorItem.GetCategory(out errorCategory);
+                uint errorCategory = 0;
+                if (errorItem != null) errorItem.GetCategory(out errorCategory);
                 if (errorCategory == (uint)__VSERRORCATEGORY.EC_ERROR) errors++;
+            }
+
+            if (errors > 0)
+            {
+                _text.SetErrors(errors.Pluralize("error"));
+                return;
             }
 
             var analysisData = _document.FilePath.AnalyzeFile();
