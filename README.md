@@ -12,7 +12,7 @@ In the above screenshot, you will notice that there is a **(*)** next to the nam
 
 ![Initial view](screenshots/class_info_mouseover.png)
 
-The rules to identify if the number of lines of a method is below a certain number, or if the number of methods in a class is below a certain is defined in various classes under the `RoslynCodeAnalysis.Lib.Rules` namespace. Here is another screenshot of a class that has more than the defined number (10).
+The rules to identify if the number of lines of a method is below a certain number, or if the number of methods in a class is below a certain is defined in various classes under the `RoslynCodeAnalysis.Lib.Rules` namespace (you can look at them [here](https://github.com/karthik25/roslyn-code-analysis-extension/tree/master/RoslynCodeAnalysis.Lib/Rules)). Again, it's a work in progress and so not all the rules defined here have been used yet! Here is another screenshot of a class that has more than the defined number (10).
 
 ![Initial view](screenshots/class_info_mouseover_method_count.png)
 
