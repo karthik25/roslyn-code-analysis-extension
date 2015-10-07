@@ -1,6 +1,6 @@
 # Roslyn Code Analysis Extension
 
-Looking at the name of the extension, you probably already guessed what this does and also wondering why I didn't come up with a more interesting name :) Just in case, this extension uses various roslyn assemblies like **Microsoft.CodeAnalysis**, **Microsoft.CodeAnalysis.CSharp** in order to analyze the active tab and shows some helpful information. Like this one for instance!
+Looking at the name of the extension, you probably already guessed what this does and also wondering why I didn't come up with a more interesting name :) Just in case, this extension uses various roslyn (assemblies like **Microsoft.CodeAnalysis**, **Microsoft.CodeAnalysis.CSharp**) in order to analyze the active tab and shows some helpful information. Like this one for instance!
 
 ![Initial view](screenshots/initial.png)
 
@@ -12,13 +12,15 @@ In the above screenshot, you will notice that there is a **(*)** next to the nam
 
 ![Initial view](screenshots/class_info_mouseover.png)
 
-The rules to identify if the number of lines of a method is below a certain number, or if the number of methods in a class is below a certain is defined in various classes under the `RoslynCodeAnalysis.Lib.Rules` namespace (you can look at them [here](https://github.com/karthik25/roslyn-code-analysis-extension/tree/master/RoslynCodeAnalysis.Lib/Rules)). Again, it's a work in progress and so not all the rules defined here have been used yet! Here is another screenshot of a class that has more than the defined number (10).
+The rules to identify if the number of lines of a method is below a certain value, or if the number of methods in a class is below a certain value is defined in various classes under the `RoslynCodeAnalysis.Lib.Rules` namespace (you can look at them [here](https://github.com/karthik25/roslyn-code-analysis-extension/tree/master/RoslynCodeAnalysis.Lib/Rules)). Again, it's a work in progress and so not all the rules defined here have been used yet! Here is another screenshot of a class that has more than the recommended number of methods (10).
 
 ![Initial view](screenshots/class_info_mouseover_method_count.png)
 
 Also, if the tab you are viewing also has interfaces, after the number of classes are displayed, you will also see the number of interfaces in the file, like this:
 
 ![Initial view](screenshots/interface.png)
+
+It was mentioned earlier that the information displayed changes every 15 seconds after the first time. During this time the contents of the current tab are parsed using roslyn. Before this is carried out there are some checks in place so that if there are errors in the current file, the parsing process does not happen (credits - Error Highlighter extension [[^](https://github.com/madskristensen/ErrorHighlighter)]).
 
 ## Installation
 
