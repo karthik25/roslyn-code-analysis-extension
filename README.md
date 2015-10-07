@@ -28,7 +28,7 @@ To install the extension, download the project, build it and open the RoslynCode
 
 ## Supported Versions
 
-I have tested this extension with Visual Studio 2012 Professional, Visual Studio 2012 Ultimate and Visual Studio 2015 RC. Soon I will test it with Visual Studio 2013 too and update here. When you build and click on the .vsix file generated the dialog would list all the available version to which the extension should be installed including Visual Studio 2013. But please remember that I haven't had the chance to verify it (but I believe it should work). When I try it out for VS 2013, if I notice that it does not work, I will be updating the **vsixmanifest** file to exclude it.
+I have tested this extension with Visual Studio 2012 Professional, Visual Studio 2012 Ultimate and Visual Studio Community 2015 RC. Soon I will test it with Visual Studio 2013 too and update here. When you build and click on the .vsix file generated the dialog would list all the available version to which the extension should be installed including Visual Studio 2013. But please remember that I haven't had the chance to verify it (but I believe it should work). When I try it out for VS 2013, if I notice that it does not work, I will be updating the **vsixmanifest** file to exclude it.
 
 ## Issues
 
