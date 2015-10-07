@@ -4,4 +4,9 @@ Thanks to the numerous tutorials out there (will add the list soon!) and all the
 
 https://github.com/madskristensen/ErrorHighlighter. 
 
-This extension pretty much single handedly helps you getting started on developing visual studio extensions. I will add more to this file as and when I figure out what else I am missing!
+This extension pretty much single handedly helps you in getting started with developing visual studio extensions. I will add more to this file as and when I figure out what else I am missing!
+
+## More Credits 
+
+* Humanizer (https://github.com/MehdiK/Humanizer)
+* Microsoft (obviously for Roslyn and everything else!)
